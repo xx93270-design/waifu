@@ -12,6 +12,7 @@ from database import waifus as waifu_db
 from database import collections as col_db
 from database import users as user_db
 from database import groups as grp_db
+from database.db import get_pool as _db_get_pool
 from database import logs as log_db
 from database import events as event_db
 from database import settings as settings_db
@@ -96,7 +97,7 @@ async def restore_active_spawns(context):
     now = datetime.now()
     restored = 0
     try:
-        pool = await grp_db.get_pool()
+        pool = await _db_get_pool()
         async with pool.acquire() as conn:
             rows = await conn.fetch("SELECT * FROM spawn_state WHERE waifu_id IS NOT NULL")
             expired_ids = []
