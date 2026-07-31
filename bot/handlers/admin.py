@@ -975,7 +975,8 @@ async def cmd_event(update: Update, context: ContextTypes.DEFAULT_TYPE):
             return
         enabled = args[2].lower() in {"on", "1", "true", "yes", "enable", "enabled"}
         await event_db.toggle_event(event_id, enabled)
-        await update.message.reply_text(f"✅ Event #{event_id} {'yoqildi' if enabled else 'o\'chirildi'}.")
+        status_txt = 'yoqildi' if enabled else "o'chirildi"
+        await update.message.reply_text(f"✅ Event #{event_id} {status_txt}.")
         return
 
     if sub == "delete":
